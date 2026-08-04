@@ -1,0 +1,74 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.dataloop.ai/docs/platform-release-notes
+scheme: dated-release-notes
+channels:
+- name: Platform Release Notes
+  url: https://docs.dataloop.ai/docs/platform-release-notes
+  cadence: irregular, roughly every 1-4 months
+  format: dated sections with New Features / Enhancements / Deprecations subheads
+- name: SDK Release Notes
+  url: https://docs.dataloop.ai/docs/sdk-release-notes
+  cadence: per dtlpy release
+  format: semver
+- name: Releases hub
+  url: https://docs.dataloop.ai/releases/docs/platform-release-notes-1
+  format: individual dated release articles
+current:
+  platform_release: '2026-07-27'
+  sdk_version: 1.124.2
+  api_version: v1
+entries:
+- date: '2026-07-27'
+  theme: Infrastructure freedom — hybrid and first full on-premises deployment
+  breaking: false
+  additions:
+  - DDOE On-Premises Installer (first release) — full platform deployable in a customer data center
+  - Expanded hybrid setup — connect a self-managed Kubernetes cluster and run FaaS apps, pipelines and preprocessing on it
+  - Preprocesses Management tab — unified view/pause/resume of preprocesses at system, org and project level
+  - Organization Bots — auto-created org bot added to every project for org-scoped preprocesses
+  - System Projects — auto-created per organization as the control point for org-level functions
+  - Redesigned dataset creation flow covering on-prem and cluster-connected storage
+  - Project Recipe — project-level labels/attributes/annotation settings as the single source of truth
+  - Ask Donna — built-in AI assistant in the platform interface
+  removals:
+  - Manual bot creation is no longer available
+- date: '2026-03-30'
+  theme: Rebrand to Dell Data Orchestration Engine (DDOE)
+  breaking: false
+  additions:
+  - Platform renamed Dell Data Orchestration Engine (DDOE); UI updated with Dell name, logo and look and feel
+  - New Item Details panel with built-in file preview
+  - DDOE Hub "Getting Started" tab with curated ready-to-use solutions
+  - GenAI Evaluation Studio and multimodal recipes
+  - Tasks management and recipe creation updates
+- date: '2026-02-18'
+  theme: Enhancements
+  breaking: false
+- date: '2025-06-30'
+  theme: New features and enhancements
+  breaking: false
+- date: '2025-04-28'
+  theme: New features, enhancements and deprecations
+  breaking: true
+  note: carries a Deprecations section
+- date: '2025-02-27'
+  theme: New features and enhancements
+  breaking: false
+- date: '2025-01-31'
+  theme: New features and enhancements
+  breaking: false
+- date: '2024-12-31'
+  theme: New annotation tools
+  breaking: false
+feed:
+  rss: null
+  atom: null
+  note: >-
+    No RSS/Atom/JSON feed for the changelog. The status page (status.dataloop.ai)
+    does publish Atom and RSS feeds, but those carry incidents, not releases.
+gap:
+  summary: >-
+    Release notes are dated and readable but not machine-readable — no feed, no
+    per-release version identifier for the platform API, and breaking changes are
+    only signposted inside prose sections.

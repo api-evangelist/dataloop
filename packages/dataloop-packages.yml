@@ -1,0 +1,81 @@
+generated: '2026-08-04'
+method: searched
+source: https://pypi.org/project/dtlpy/
+notes: >-
+  First-party Dataloop client libraries verified live on PyPI and the npm registry.
+  The Python SDK (dtlpy) is the primary, fully-supported client and also ships the
+  `dlp` CLI; the JavaScript surface is split between a browser/Node SDK and the
+  Vue component library used to build Dataloop platform applications (panels).
+packages:
+- language: python
+  registry: pypi
+  name: dtlpy
+  version: 1.124.2
+  url: https://pypi.org/project/dtlpy/
+  install: pip install dtlpy
+  source_code: https://github.com/dataloop-ai/dtlpy
+  docs: https://sdk-docs.dataloop.ai/en/latest/
+  official: true
+  provides: [sdk, cli]
+  x-evidence:
+    fetched: '2026-08-04'
+    url: https://pypi.org/pypi/dtlpy/json
+    http_status: 200
+- language: python
+  registry: pypi
+  name: dtlpy-agent
+  version: 1.58.29.0
+  url: https://pypi.org/project/dtlpy-agent/
+  install: pip install dtlpy-agent
+  source_code: https://github.com/dataloop-ai/dtlpy
+  description: Dataloop package runner (FaaS service runtime companion to dtlpy).
+  official: true
+  provides: [runtime]
+  x-evidence:
+    fetched: '2026-08-04'
+    url: https://pypi.org/pypi/dtlpy-agent/json
+    http_status: 200
+- language: javascript
+  registry: npm
+  name: '@dataloop-ai/jssdk'
+  version: 0.1.3
+  url: https://www.npmjs.com/package/@dataloop-ai/jssdk
+  install: npm install @dataloop-ai/jssdk
+  description: Dataloop's JS SDK Library.
+  official: true
+  provides: [sdk]
+  x-evidence:
+    fetched: '2026-08-04'
+    url: https://registry.npmjs.org/@dataloop-ai/jssdk
+    http_status: 200
+- language: javascript
+  registry: npm
+  name: '@dataloop-ai/components'
+  version: 0.20.276
+  url: https://www.npmjs.com/package/@dataloop-ai/components
+  install: npm install @dataloop-ai/components
+  source_code: https://github.com/dataloop-ai/components
+  description: >-
+    Dataloop Components Library — custom-made Vue components used to build
+    Dataloop platform applications and panels.
+  official: true
+  provides: [ui-components]
+  x-evidence:
+    fetched: '2026-08-04'
+    url: https://registry.npmjs.org/@dataloop-ai/components
+    http_status: 200
+registries_probed:
+- {registry: pypi, result: hit}
+- {registry: npm, result: hit}
+- {registry: maven-central, result: none}
+- {registry: nuget, result: none}
+- {registry: pkg.go.dev, result: none}
+- {registry: rubygems, result: none}
+- {registry: packagist, result: none}
+- {registry: crates.io, result: none}
+not_first_party:
+- name: dataloop
+  registry: pypi
+  reason: >-
+    PyPI project "dataloop" (0.0.0) is published by CambioML, not Dataloop Ltd.
+    Excluded to avoid a false first-party SDK claim.

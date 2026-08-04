@@ -1,0 +1,39 @@
+generated: '2026-08-04'
+method: searched
+source: https://www.npmjs.com/package/@dataloop-ai/components
+notes: >-
+  Dataloop ships a first-party client-side component library used to build
+  Dataloop platform applications — panels and studio surfaces that render inside
+  the Dataloop console rather than embeddable widgets for a third-party website.
+  This is distinct from the server-side SDKs catalogued in packages/.
+families:
+- name: Dataloop Components Library
+  loader:
+    package: '@dataloop-ai/components'
+    registry: npm
+    version: 0.20.276
+    install: npm install @dataloop-ai/components
+    url: https://www.npmjs.com/package/@dataloop-ai/components
+    source_code: https://github.com/dataloop-ai/components
+  framework: Vue
+  official: true
+  description: >-
+    Custom-made Vue components used to compose Dataloop platform applications.
+    Published publicly on npm so third-party app builders can match the platform
+    look and behaviour.
+  surface: in-platform application panels
+- name: Dataloop Applications / Panels
+  official: true
+  description: >-
+    The application model that hosts the components — apps declared in a DPK
+    (Dataloop Package) manifest and mounted as panels inside the console (dataset
+    browser, item studio, task, and settings slots).
+  docs: https://docs.dataloop.ai/docs/marketplace
+  surface: console panel slots
+embeddable_outside_platform:
+  supported: false
+  note: >-
+    No hosted/prebuilt UI element, drop-in web component, or embeddable dashboard
+    is published for use on a customer's own site.
+x-evidence:
+- {fetched: '2026-08-04', url: 'https://registry.npmjs.org/@dataloop-ai/components', http_status: 200}

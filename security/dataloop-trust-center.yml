@@ -1,0 +1,52 @@
+generated: '2026-08-04'
+method: searched
+probe: true
+url: https://trust.dataloop.ai/
+platform: SafeBase
+title: Dataloop AI Trust Center
+contact: security@dataloop.ai
+certifications:
+- SOC 2 Type 2
+- ISO/IEC 27001:2022
+- ISO/IEC 27701
+- ISO/IEC 27017:2015
+- ISO/IEC 27018:2019
+- GDPR
+- AWS Qualified Software
+documents:
+- {name: GDPR - Subprocessors, category: DOCUMENTS, access: gated}
+- {name: Pentest Report, category: REPORTS, access: gated}
+- {name: Security Whitepaper, category: REPORTS, access: gated}
+- {name: 'ISO/IEC 27001:2022', category: COMPLIANCE, access: gated}
+- {name: ISO/IEC 27701, category: COMPLIANCE, access: gated}
+- {name: SOC 2 Type 2, category: COMPLIANCE, access: gated}
+- {name: Data Processing Agreement, category: LEGAL, access: gated}
+risk_profile:
+  recovery_time_objective: 12 hours
+  recovery_point_objective: 24 hours
+control_families:
+- {family: App Security, controls: [Software Development Lifecycle, Application Penetration Testing, Code Analysis]}
+- {family: Product Security, controls: [Audit Logging, Role-Based Access Control, Integrations]}
+- {family: Endpoint Security, controls: [Anti-Malware, Disk Encryption, DNS Filtering]}
+- {family: Legal, controls: [Subprocessors, Cyber insurance]}
+partners_listed:
+- Dell
+- MongoDB
+- Snowflake
+- Databricks
+- HPE
+- NVIDIA
+- Qualcomm
+- Google Cloud
+- Microsoft
+- Amazon Web Services (AWS)
+- SingleStore
+evidence:
+- source: https://trust.dataloop.ai/
+  http_status: 200
+  fetched: '2026-08-04'
+  keywords: [trust center, soc 2 type 2, iso/iec 27001, iso/iec 27701, gdpr, security review]
+note: >-
+  The automated probe (0-working/probe-security-programs.py) returned trust=none
+  for this provider because the SafeBase page did not clear its keyword gate; the
+  trust center was confirmed by direct fetch and is recorded here as searched.

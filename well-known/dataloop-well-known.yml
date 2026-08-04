@@ -1,0 +1,78 @@
+generated: '2026-08-04'
+method: probed
+source: live HTTP probe of every Dataloop host
+notes: >-
+  No /.well-known/ discovery document was found on any Dataloop host. Two of the
+  hosts (gate.dataloop.ai and console.dataloop.ai) are single-page applications
+  whose catch-all route answers HTTP 200 with the same ~1.8KB HTML shell for
+  EVERY /.well-known/* path — those 200s are recorded here as false positives,
+  not as documents. No security.txt, no OIDC/OAuth discovery, no api-catalog,
+  no ai-plugin.json, and no A2A agent card are published anywhere on the domain.
+hosts:
+- host: https://gate.dataloop.ai
+  role: api
+  spa_catch_all: true
+  documents:
+  - {path: /.well-known/security.txt, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/openid-configuration, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/oauth-authorization-server, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/oauth-protected-resource, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/agent-card.json, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/agent.json, status: 200, result: html-shell-false-positive}
+- host: https://dataloop.ai
+  role: website
+  spa_catch_all: false
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://console.dataloop.ai
+  role: console
+  spa_catch_all: true
+  documents:
+  - {path: /.well-known/security.txt, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/openid-configuration, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/api-catalog, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/ai-plugin.json, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/agent-card.json, status: 200, result: html-shell-false-positive}
+  - {path: /.well-known/agent.json, status: 200, result: html-shell-false-positive}
+- host: https://docs.dataloop.ai
+  role: documentation
+  spa_catch_all: false
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://developers.dataloop.ai
+  role: developer-portal
+  spa_catch_all: false
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/openid-configuration, status: 404}
+  - {path: /.well-known/api-catalog, status: 404}
+  - {path: /.well-known/ai-plugin.json, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+- host: https://sdk-docs.dataloop.ai
+  role: sdk-documentation
+  spa_catch_all: false
+  documents:
+  - {path: /.well-known/security.txt, status: 404}
+  - {path: /.well-known/agent-card.json, status: 404}
+  - {path: /.well-known/agent.json, status: 404}
+found: []
+gap:
+  summary: >-
+    Dataloop publishes no /.well-known/ surface at all. The cheapest wins are an
+    RFC 9116 security.txt on dataloop.ai (the security contact security@dataloop.ai
+    is already published on trust.dataloop.ai) and an RFC 9727 /.well-known/api-catalog
+    pointing at the REST API. Neither exists today.
+  recommended:
+  - /.well-known/security.txt
+  - /.well-known/api-catalog

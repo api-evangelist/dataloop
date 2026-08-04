@@ -1,0 +1,93 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.dataloop.ai/docs/rest-api-connection
+docs: https://docs.dataloop.ai/docs/rest-api-connection
+notes: >-
+  Dataloop publishes no public OpenAPI, so this profile is captured from the
+  provider's own API Authentication documentation and from the first-party
+  Python SDK/CLI (dtlpy), not derived from securitySchemes.
+summary:
+  types: [http, oauth2, apiKey]
+  api_key_in: [header]
+  http_schemes: [bearer]
+  bearer_format: JWT
+  oauth2_flows: [clientCredentials, authorizationCode]
+  identity_provider: Auth0
+schemes:
+- name: BearerJWT
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  in: header
+  parameter: Authorization
+  description: >-
+    Every request to the Dataloop platform API carries a JWT in the Authorization
+    header as a bearer token. This is the single transport for all authenticated
+    calls to https://gate.dataloop.ai/api/v1.
+  source: https://docs.dataloop.ai/docs/rest-api-connection
+- name: APIKey
+  type: apiKey
+  in: header
+  parameter: Authorization
+  format: JWT
+  description: >-
+    Dataloop API keys are JSON Web Tokens tied to a platform user and inherit that
+    user's permissions. Generated from the project Dashboard; visible only once at
+    creation. Only users with the Developer role or higher can create keys.
+  constraints:
+    max_keys_per_user: 10
+    max_keys_per_project: 10
+    expiration: 1 year
+    revocation: >-
+      A Developer can revoke their own keys and list all keys in the project;
+      a project Owner can revoke any key in the project.
+  source: https://docs.dataloop.ai/docs/rest-api-connection
+- name: UserCredentialsToken
+  type: oauth2
+  flow: password-style token exchange
+  token_endpoint: https://gate.dataloop.ai/token?default
+  request:
+    method: POST
+    content_type: application/json
+    body_fields: [username, password, type]
+    type_value: user_credentials
+  description: >-
+    Exchange registered account credentials for a JWT. Documented for external
+    systems (Postman/Insomnia) that need a bearer token. Google-SSO accounts must
+    have a password set and log in once before this flow works.
+  source: https://docs.dataloop.ai/docs/rest-api-connection
+- name: M2M
+  type: oauth2
+  flow: clientCredentials
+  identity_provider: Auth0
+  credentials: [client_id, client_secret, email, password]
+  cli: dlp login-m2m -e <email> -p <password> -i <client-id> -s <client-secret>
+  description: >-
+    Machine-to-machine login for long-running SDK jobs and automation. Exposed by
+    the first-party CLI as `dlp login-m2m` / `dlp login-secret`, and by the SDK as
+    the recommended path for running API commands from an external system.
+  source: https://sdk-docs.dataloop.ai/en/latest/cli.html
+- name: InteractiveLogin
+  type: oauth2
+  flow: authorizationCode
+  identity_provider: Auth0
+  cli: dlp login
+  description: >-
+    Interactive browser login through the Auth0 hosted interface, used by the SDK
+    and CLI for developer sessions. `dlp login-token -t <token>` accepts a
+    previously obtained JWT.
+  source: https://sdk-docs.dataloop.ai/en/latest/cli.html
+authorization_model:
+  style: role-based
+  docs: https://docs.dataloop.ai/docs/roles-and-permissions
+  note: >-
+    Dataloop does not publish an OAuth scope registry. Access is governed by
+    organization/project roles (Owner, Developer, Annotator, Annotation Manager
+    and organization-level roles) that the JWT inherits from its user, so there is
+    no scopes/ artifact for this provider.
+gap:
+  summary: >-
+    Authentication is documented in prose only. There is no machine-readable
+    securityScheme (no public OpenAPI), no OIDC discovery document, and no
+    /.well-known/oauth-authorization-server, so an agent cannot negotiate auth
+    programmatically — it must read the docs page.

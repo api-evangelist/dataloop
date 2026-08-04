@@ -1,0 +1,71 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.dataloop.ai/docs/deprecations
+versioning:
+  scheme: uri-path
+  current: v1
+  base: https://gate.dataloop.ai/api/v1
+  note: >-
+    The platform REST API is pinned at /api/v1 and Dataloop publishes no API
+    version policy document. Practical versioning is carried by the Python SDK
+    (dtlpy), which is versioned semantically and whose release notes are where
+    breaking changes are announced.
+  sdk_versioning:
+    package: dtlpy
+    current: 1.124.2
+    scheme: semver
+    release_notes: https://docs.dataloop.ai/docs/sdk-release-notes
+deprecation:
+  policy_url: https://docs.dataloop.ai/docs/deprecations
+  policy_published: true
+  sunset_header: false
+  deprecation_header: false
+  style: >-
+    A central Deprecations page tracks features, settings and services that have
+    been or are scheduled to be deprecated, with the SDK version at which each
+    became deprecated and the version at which it became non-functional. No RFC
+    8594 Sunset/Deprecation HTTP headers are advertised.
+  examples:
+  - item: '`4ptBox` project setting'
+    reason: excessive API calls during annotation, latency in the SDK
+    status: removed from SDK and global settings
+  - item: Attributes 1.0 (list-based attributes)
+    deprecated_from_sdk: 1.99.0
+    non_functional_from_sdk: 1.90.39
+    migration: migrate to dict-based Attributes 2.0; use update_attributes()
+  - item: '`use_attributes_2()` function'
+    deprecated_from_sdk: 1.99.0
+    non_functional_from_sdk: 1.90.39
+  - item: Key Frames counted as Data Points in billing
+    status: no longer counted
+  release_note_deprecations:
+  - {title: SDK Annotation.Geo deprecation, url: 'https://docs.dataloop.ai/releases/docs/geo-deprecation'}
+  - {title: Deprecation of "multi" parameter in Recipe Attributes 2.0, url: 'https://docs.dataloop.ai/releases/docs/deprecation-of-multi-parameter-in-recipe-attributes-20'}
+  - {title: FaaS SDK Version - Migration, url: 'https://docs.dataloop.ai/releases/docs/faas-sdk-version-migration'}
+status_page:
+  url: https://status.dataloop.ai/
+  provider: Atlassian Statuspage
+  subscribe: [email, slack, atom, rss]
+  components:
+  - {name: Dataloop API Service, state_observed: Operational, uptime_90d: 100.0%}
+  - {name: Dataloop Web Application, state_observed: Operational, uptime_90d: 100.0%}
+  - {name: Dataloop Developer Portal, state_observed: Operational}
+  x-evidence:
+    fetched: '2026-08-04'
+    url: https://status.dataloop.ai/
+    http_status: 200
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA or uptime commitment was found. The trust center publishes
+    recovery objectives instead — RTO 12 hours, RPO 24 hours.
+  rto: 12 hours
+  rpo: 24 hours
+  source: https://trust.dataloop.ai/
+deprecated_operations: []
+gap:
+  summary: >-
+    Deprecations and status are well published, but there is no versioning policy
+    for the REST API itself and no Sunset/Deprecation response headers, so a client
+    cannot detect a deprecated call at runtime — only by reading release notes.

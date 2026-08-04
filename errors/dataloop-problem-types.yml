@@ -1,0 +1,63 @@
+generated: '2026-08-04'
+method: derived
+source: https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/exceptions.py
+docs: https://sdk-docs.dataloop.ai/en/latest/
+format: custom-json
+notes: >-
+  Dataloop publishes no public OpenAPI and no docs-site error reference, so this
+  catalog is derived from two first-party sources: (1) the error envelope observed
+  live on https://gate.dataloop.ai/api/v1/*, and (2) the status-code-to-exception
+  map maintained in the official Python SDK (dtlpy/exceptions.py), which is the
+  provider's own authoritative statement of which platform errors exist. Responses
+  are NOT RFC 9457 application/problem+json.
+envelope:
+  content_type: application/json
+  fields:
+  - {name: status, type: integer, description: HTTP status code, note: present on gateway-level rejections}
+  - {name: message, type: string, description: Human-readable error message; the field the SDK reads}
+  observed_examples:
+  - request: GET https://gate.dataloop.ai/api/v1/projects
+    http_status: 401
+    body: '{"status":401,"message":"You are not authorized to perform the specified action"}'
+    fetched: '2026-08-04'
+  - request: GET https://gate.dataloop.ai/api/v1/docs/
+    http_status: 401
+    body: '{"message":"Unauthorized"}'
+    fetched: '2026-08-04'
+  inconsistency: >-
+    Two different envelope shapes were observed on the same host for the same
+    class of failure — one with {status,message} and one with {message} only.
+    Agents cannot rely on `status` being present in the body.
+problems:
+- {status: 400, code: '400', title: Bad Request, sdk_exception: BadRequest, remediation: Validate the request body/query against the SDK entity definitions.}
+- {status: 401, code: '401', title: Unauthorized, sdk_exception: Unauthorized, remediation: Attach a valid JWT bearer token; re-issue if the API key expired (keys last 1 year).}
+- {status: 403, code: '403', title: Forbidden, sdk_exception: Forbidden, remediation: The token's user lacks the project/organization role required for the operation.}
+- {status: 404, code: '404', title: Not Found, sdk_exception: NotFound, remediation: Verify the entity id and that the token's user has visibility of the project.}
+- {status: 408, code: '408', title: Request Timeout, sdk_exception: RequestTimeout, remediation: Retry; consider smaller page sizes on list operations.}
+- {status: 409, code: '409', title: Conflict, sdk_exception: Conflict, remediation: Entity already exists or is in a conflicting state; fetch then update instead of create.}
+- {status: 424, code: '424', title: Failed Dependency, sdk_exception: FailedDependency, remediation: An upstream platform dependency failed; retry with backoff.}
+- {status: 500, code: '500', title: Internal Server Error, sdk_exception: InternalServerError, remediation: Retry with backoff; escalate to Dataloop support if persistent.}
+sdk_level_codes:
+  note: >-
+    Non-HTTP codes the SDK raises locally. They are not returned by the API but
+    are part of the published error contract for anything built on dtlpy.
+  codes:
+  - {code: '600', title: Token Expired, sdk_exception: TokenExpired}
+  - {code: '1001', title: Show Annotation Error, sdk_exception: ShowAnnotationError}
+  - {code: '1002', title: Export Annotation Error, sdk_exception: ExportAnnotationError}
+  - {code: '2001', title: Missing Entity, sdk_exception: MissingEntity}
+  - {code: '3001', title: SDK Error, sdk_exception: SDKError}
+  - {code: '3002', title: Entity Print Error, sdk_exception: EntityPrintError}
+  - {code: unknown, title: Unknown Exception, sdk_exception: UnknownException}
+error_suppression:
+  supported: true
+  description: >-
+    dtlpy exposes a global ErrorSuppression configuration that suppresses selected
+    platform errors (by status code, message keyword, or path pattern) and logs a
+    warning instead of raising. Filters AND within a filter, OR across filters.
+  source: https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/services/api_client.py
+gap:
+  summary: >-
+    No published error reference on the documentation site, no stable machine-readable
+    error `type` URIs, no RFC 9457 problem+json, and an inconsistent error envelope.
+    An agent has to read the SDK source to learn the error contract.

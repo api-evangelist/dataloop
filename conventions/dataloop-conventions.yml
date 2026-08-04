@@ -1,0 +1,113 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.dataloop.ai/docs/rest-api-connection
+sources:
+- https://docs.dataloop.ai/docs/rest-api-connection
+- https://sdk-docs.dataloop.ai/en/latest/
+- https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/entities/filters.py
+- https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/services/api_client.py
+notes: >-
+  Dataloop publishes no public OpenAPI, so these cross-cutting semantics are taken
+  from the provider's API documentation and from the first-party Python SDK (dtlpy),
+  which is the authoritative client implementation of the platform contract.
+base_url: https://gate.dataloop.ai/api/v1
+authentication:
+  style: bearer-jwt
+  header: 'Authorization: Bearer <JWT>'
+  token_sources: [API key (JWT), POST /token with user_credentials, Auth0 M2M client credentials]
+  detail: authentication/dataloop-authentication.yml
+idempotency:
+  supported: false
+  header: null
+  note: >-
+    No idempotency key header or parameter is documented anywhere in the Dataloop
+    API docs or implemented in the dtlpy client. Retrying a create is not safe;
+    duplicate entities are the expected outcome. No Idempotency pointer is emitted
+    for this provider.
+pagination:
+  style: page-number
+  carried_in: request body (DQL query document), not the query string
+  request_params:
+  - {name: page, description: Zero-based page index, default: 0}
+  - {name: pageSize, description: Items per page}
+  - {name: sort, description: Sort object, field to ascending/descending}
+  - {name: resource, description: Resource the query targets (Item, Annotation, Execution, Task, ...)}
+  defaults:
+    page: 0
+    page_size: 1000
+    page_size_executions: 100
+    page_size_pipeline_executions: 100
+    page_size_dpk: 100
+  maximums:
+    page_size: 1000
+    page_size_executions: 100
+    page_size_pipeline_executions: 100
+  behavior: >-
+    The SDK clamps page_size to the per-resource maximum and logs a warning rather
+    than erroring. Listing is exposed as a PagedEntities iterator in dtlpy.
+  source: https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/entities/filters.py
+query_language:
+  name: DQL (Dataloop Query Language)
+  description: >-
+    JSON filter documents used to query items, annotations, executions, tasks and
+    other resources, and to scope event triggers. Supports field/operator/value
+    clauses, AND/OR joins, sorting and projection.
+  applies_to: [list operations, event trigger scoping, dataset browsing]
+  docs: https://docs.dataloop.ai/docs/triggers
+field_expansion:
+  supported: false
+  note: No documented expand/include or sparse-fieldset mechanism.
+metadata:
+  supported: true
+  description: >-
+    Most entities (items, annotations, datasets, tasks) carry a free-form `metadata`
+    object with a reserved `metadata.system` namespace managed by the platform and a
+    `metadata.user` namespace for consumer data. DQL can filter on metadata paths.
+request_tracing:
+  request_id_header: null
+  note: >-
+    No request-id or correlation-id response header is documented. Platform-side
+    traceability is provided through the Audit Logs feature in the UI, not through
+    a per-response identifier a client can capture.
+  audit_logs: https://docs.dataloop.ai/docs/audit-log
+versioning:
+  style: uri-path
+  current: v1
+  detail: lifecycle/dataloop-lifecycle.yml
+error_envelope:
+  content_type: application/json
+  shape: '{"status": <int>, "message": "<string>"}'
+  variant_observed: '{"message": "<string>"}'
+  problem_json: false
+  detail: errors/dataloop-problem-types.yml
+rate_limiting:
+  documented: false
+  headers: null
+  note: >-
+    No published rate limits, no quota documentation, and no RateLimit/Retry-After
+    header contract. The only published throughput ceilings are pagination page-size
+    maximums. The SDK ships an aiohttp retry client, implying transient failures are
+    expected, but the retry policy is client-side and not a documented server contract.
+retries:
+  client_side: true
+  implementation: dtlpy RetryClient (aiohttp)
+  error_suppression: >-
+    dtlpy exposes global ErrorSuppression filters (by status code, message keyword,
+    or path pattern) that downgrade selected platform errors to warnings.
+  source: https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/services/api_client.py
+transport:
+  https_only: true
+  note: Dataloop states it exclusively uses HTTPS for data transfer.
+  source: https://docs.dataloop.ai/docs/data-privacy-security
+cross_links:
+  authentication: authentication/dataloop-authentication.yml
+  errors: errors/dataloop-problem-types.yml
+  lifecycle: lifecycle/dataloop-lifecycle.yml
+  events: asyncapi/dataloop-platform-events.yml
+  data_model: data-model/dataloop-data-model.yml
+gap:
+  summary: >-
+    The three conventions an agent most needs are the three that are missing:
+    no idempotency contract, no rate-limit signaling, and no request-id header.
+    Combined with the absence of a public OpenAPI, an integrator has to read the
+    Python SDK source to learn how the API actually behaves.

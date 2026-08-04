@@ -1,23 +1,137 @@
 aid: dataloop
 name: DataLoop
-description: 'DataLoop is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: 'Dataloop is an enterprise AI data platform for the full unstructured-data
+  lifecycle — ingesting images, video, audio, text and LiDAR from cloud or on-premises
+  storage, labeling and reviewing it through managed annotation tasks and recipes,
+  orchestrating it with pipelines and serverless functions (FaaS), and turning it into
+  governed, model-ready datasets. The platform is programmable end to end: a JWT-authenticated
+  REST API at gate.dataloop.ai/api/v1, a first-party Python SDK and `dlp` CLI (dtlpy),
+  a JavaScript SDK, and a Vue component library for building in-platform applications.
+  Founded in Israel in 2017, Dataloop was acquired by Dell Technologies in December
+  2025 and the platform is now marketed as the Dell Data Orchestration Engine (DDOE).'
 url: https://raw.githubusercontent.com/api-evangelist/dataloop/refs/heads/main/apis.yml
+image: https://dataloop.ai/wp-content/uploads/2024/02/dataloop-logo-main.svg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-04'
 modified: '2026-08-04'
 tags:
+- Artificial Intelligence
+- Machine Learning
+- Data Management
+- Data Annotation
+- MLOps
+- Computer Vision
+- Generative AI
+- Data Labeling
+- Pipelines
+- Serverless
+- Enterprise Software
 - Company
-apis: []
+apis:
+- aid: dataloop:platform-api
+  name: Dataloop Platform API
+  description: 'The Dataloop (Dell Data Orchestration Engine) platform REST API. Every
+    part of the platform — projects, datasets, items, annotations, recipes and ontologies,
+    tasks and assignments, packages, services, triggers, executions and pipelines —
+    can be created, read, updated and deleted over HTTP. Requests are authenticated
+    with a JSON Web Token supplied as an Authorization bearer token, obtained either
+    from a platform API key or from the /token endpoint. Dataloop does not publish a
+    public OpenAPI definition; the interactive Swagger UI at gate.dataloop.ai/api/v1/docs/
+    requires an authenticated browser session.'
+  humanURL: https://docs.dataloop.ai/docs/rest-api-connection
+  baseURL: https://gate.dataloop.ai/api/v1
+  tags:
+  - Data Management
+  - Annotation
+  - Pipelines
+  - Machine Learning
+  properties:
+  - type: Documentation
+    url: https://docs.dataloop.ai/docs/rest-api-connection
+  - type: Authentication
+    url: authentication/dataloop-authentication.yml
+  - type: ErrorCatalog
+    url: errors/dataloop-problem-types.yml
+  - type: Conventions
+    url: conventions/dataloop-conventions.yml
+  - type: DataModel
+    url: data-model/dataloop-data-model.yml
+  - type: Webhooks
+    url: asyncapi/dataloop-platform-events.yml
+common:
+- type: DomainSecurity
+  url: security/dataloop-domain-security.yml
+- type: Security
+  url: https://dataloop.ai/security/
+- type: VulnerabilityDisclosure
+  url: security/dataloop-vulnerability-disclosure.yml
+- type: Website
+  url: https://dataloop.ai/
+- type: DeveloperPortal
+  url: https://developers.dataloop.ai/resources
+- type: Documentation
+  url: https://docs.dataloop.ai/docs
+- type: APIReference
+  url: https://sdk-docs.dataloop.ai/en/latest/
+- type: GettingStarted
+  url: https://developers.dataloop.ai/onboarding/onboarding
+- type: Support
+  url: https://dataloop.ai/contact/
+- type: Blog
+  url: https://dataloop.ai/blog/
+- type: GitHubOrganization
+  url: https://github.com/dataloop-ai
+- type: SignUp
+  url: https://console.dataloop.ai/welcome
+- type: TermsOfService
+  url: https://dataloop.ai/terms/
+- type: PrivacyPolicy
+  url: https://dataloop.ai/privacy-policy/
+- type: Compliance
+  url: https://docs.dataloop.ai/docs/compliance
+- type: TrustCenter
+  url: security/dataloop-trust-center.yml
+- type: StatusPage
+  url: https://status.dataloop.ai/
+- type: Deprecation
+  url: https://docs.dataloop.ai/docs/deprecations
+- type: ChangeLog
+  url: changelog/dataloop-changelog.yml
+- type: Lifecycle
+  url: lifecycle/dataloop-lifecycle.yml
+- type: Authentication
+  url: authentication/dataloop-authentication.yml
+- type: Conventions
+  url: conventions/dataloop-conventions.yml
+- type: ErrorCatalog
+  url: errors/dataloop-problem-types.yml
+- type: Conformance
+  url: conformance/dataloop-conformance.yml
+- type: Packages
+  url: packages/dataloop-packages.yml
+- type: SDKs
+  url: packages/dataloop-packages.yml
+- type: CLI
+  url: cli/dataloop-cli.yml
+- type: Components
+  url: components/dataloop-components.yml
+- type: DataModel
+  url: data-model/dataloop-data-model.yml
+- type: MCPServer
+  url: mcp/dataloop-mcp.yml
+- type: LLMsTxt
+  url: llms/dataloop-llms.txt
+- type: Webhooks
+  url: asyncapi/dataloop-platform-events.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
-common:
-- type: Website
-  url: https://www.hiive.com/securities/dataloop-stock
+x-enrichment:
+  date: '2026-08-04'
+  status: enriched
+  artifacts_added: 15
+  pass: local-v1

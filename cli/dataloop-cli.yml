@@ -1,0 +1,75 @@
+generated: '2026-08-04'
+method: searched
+source: https://sdk-docs.dataloop.ai/en/latest/cli.html
+name: dlp
+full_name: Dataloop Command Line Interface
+shipped_with:
+  package: dtlpy
+  registry: pypi
+  version: 1.124.2
+  note: The CLI is installed as part of the Python SDK; there is no separate binary.
+install:
+- method: pip
+  command: pip install dtlpy
+- method: upgrade
+  command: dlp upgrade
+  options: '-u/--url <package url> (default "dtlpy")'
+usage: 'dlp [-h] [-v] {operation} ...'
+commands:
+- group: session
+  commands:
+  - {name: shell, description: Open an interactive Dataloop shell}
+  - {name: login, description: Login using the web Auth0 interface}
+  - {name: login-token, description: Login by passing a valid token, args: '-t/--token'}
+  - {name: login-secret, description: Login with client id and secret, args: '-e/--email -p/--password -i/--client-id -s/--client-secret'}
+  - {name: login-m2m, description: Machine-to-machine login with client id and secret, args: '-e/--email -p/--password -i/--client-id -s/--client-secret'}
+  - {name: logout, description: Logout}
+  - {name: init, description: Initialize a .dataloop context in the working directory}
+  - {name: checkout-state, description: Print the current checkout state}
+- group: environment
+  commands:
+  - {name: 'api info', description: Print API/gateway connection information}
+  - {name: 'api setenv', description: Set the platform environment, args: '-e/--env'}
+  - {name: version, description: Print the dtlpy SDK version}
+  - {name: upgrade, description: Update the dtlpy package}
+  - {name: help, description: Get help}
+- group: resources
+  commands:
+  - {name: projects, description: Project operations}
+  - {name: datasets, description: Dataset operations}
+  - {name: items, description: Item operations}
+  - {name: videos, description: Video operations}
+  - {name: packages, description: Package operations}
+  - {name: services, description: Service (FaaS) operations}
+  - {name: triggers, description: Trigger operations}
+  - {name: app, description: Application operations}
+- group: development
+  commands:
+  - {name: 'development local', description: 'Local development session using Docker and code-server; sub-commands start | pause | stop'}
+  - {name: 'development remote', description: Remote development session}
+  - {name: deploy, description: Deploy a package/service from a local manifest}
+  - {name: generate, description: Generate a package/service scaffold}
+- group: shell-navigation
+  commands:
+  - {name: ls, description: List}
+  - {name: pwd, description: Print working directory}
+  - {name: cd, description: Change directory}
+  - {name: mkdir, description: Make directory}
+  - {name: clear, description: Clear the screen}
+  - {name: exit, description: Exit the shell}
+key_flows:
+- name: Authenticate for automation
+  steps: [dlp login-m2m -e <email> -p <password> -i <client-id> -s <client-secret>]
+- name: Browse a project's datasets
+  steps: [dlp login, dlp projects ls, 'dlp datasets ls --project-name <project>']
+- name: Deploy a serverless function
+  steps: [dlp init, dlp generate, dlp deploy]
+- name: Local development against the platform
+  steps: [dlp development local start, dlp development local stop]
+docs:
+  reference: https://sdk-docs.dataloop.ai/en/latest/cli.html
+  sdk_overview: https://developers.dataloop.ai/docs_build/tutorials_templates/getting_started/sdk_overview/chapter
+x-evidence:
+  fetched: '2026-08-04'
+  url: https://sdk-docs.dataloop.ai/en/latest/cli.html
+  http_status: 200

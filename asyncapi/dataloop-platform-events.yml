@@ -1,0 +1,99 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.dataloop.ai/docs/triggers
+sources:
+- https://docs.dataloop.ai/docs/triggers
+- https://docs.dataloop.ai/docs/pipeline-trigger
+- https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/entities/trigger.py
+- https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/entities/webhook.py
+- https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/repositories/webhooks.py
+spec_type: none
+asyncapi_published: false
+notes: >-
+  Dataloop publishes no AsyncAPI document, but it does ship two real event
+  surfaces. (1) Event Triggers: a consumer registers a trigger on a resource +
+  action, optionally narrowed by a DQL filter, and the platform invokes the
+  consumer's deployed FaaS service or pipeline when the event occurs. (2) Webhooks:
+  a first-class platform entity with its own CRUD API at /webhooks, holding an
+  outbound hookUrl and httpMethod scoped to a project, callable as a pipeline node.
+  This artifact records the published event and webhook surface as found in the
+  provider's own documentation and first-party SDK; nothing here is fabricated.
+surface:
+  name: Dataloop Event Triggers and Webhooks
+  delivery:
+  - platform-invoked FaaS service or pipeline node (Event/Cron triggers)
+  - outbound HTTP call to a registered hookUrl (Webhook entity)
+  outbound_http_webhooks: true
+  consumer_registers: trigger (resource + action + DQL filter + execution mode), or a webhook (name + hookUrl + httpMethod)
+  managed_via: [UI Triggers tab, Python SDK dl.triggers / dl.webhooks, 'dlp triggers CLI', REST API]
+webhooks:
+  entity: Webhook
+  api_base: https://gate.dataloop.ai/api/v1/webhooks
+  operations:
+  - {method: POST, path: /webhooks, description: Create a webhook}
+  - {method: POST, path: /webhooks/query, description: List/query webhooks (DQL, paged)}
+  - {method: GET, path: '/webhooks/{id}', description: Get a webhook}
+  - {method: PATCH, path: '/webhooks/{id}', description: Update a webhook}
+  - {method: DELETE, path: '/webhooks/{id}', description: Delete a webhook}
+  create_payload:
+    name: string
+    httpMethod: 'GET | POST | DELETE | PATCH'
+    hookUrl: string (consumer-supplied target URL)
+    project: project id
+  fields_returned: [id, name, url, hookUrl, httpMethod, project, creator, createdAt, updatedAt]
+  scope: project
+  signing: not documented
+  retries: not documented
+  source: https://github.com/dataloop-ai/dtlpy/blob/master/dtlpy/repositories/webhooks.py
+  note: >-
+    Derived from the first-party Python SDK, which is the authoritative client for
+    this API. The webhook surface is NOT covered on the documentation site — there
+    is no webhook page in the docs index (llms.txt) and no event-payload reference.
+trigger_types:
+- {type: Event, description: Fires when a predefined platform event occurs on a resource}
+- {type: Cron, description: Scheduled time-based invocation of a service function}
+resources:
+- {name: Item, description: A data item (image, video, audio, text, LiDAR frame) in a dataset}
+- {name: Dataset, description: A dataset within a project}
+- {name: Annotation, description: An annotation on an item}
+- {name: Task, description: An annotation/review task}
+- {name: Assignment, description: An assignment of a task to an annotator}
+- {name: ItemStatus, description: The workflow status of an item within a task}
+actions:
+- {name: Created}
+- {name: Updated}
+- {name: Deleted}
+- {name: statusChanged}
+- {name: Clone}
+execution_modes:
+- {name: Once, description: Fire the trigger only the first time an entity matches}
+- {name: Always, description: Fire every time the event occurs}
+filtering:
+  language: DQL
+  applies_to: Event triggers only
+  description: >-
+    A DQL filter narrows which entities fire the trigger (e.g. only items in a
+    given directory, or only annotations of a given label).
+in_platform_notifications:
+  description: >-
+    Separate from triggers, Dataloop runs a subscriber notification system that
+    emits alerts on service and workflow events (service CrashLoopBackOff and
+    configuration/authorization/init errors, ImagePullBackOff, Service Execution
+    Failed, Pipeline Cycle Failed, Task Created/Completed/Updated/Expired,
+    Assignment Created/Canceled/Updated/Expired/Priority Change, QA-flow issue
+    and note events). Channels are the in-product inbox and email — not HTTP.
+  docs: https://docs.dataloop.ai/docs/notification-system
+x-evidence:
+- {fetched: '2026-08-04', url: 'https://docs.dataloop.ai/docs/triggers.md', http_status: 200}
+- {fetched: '2026-08-04', url: 'https://raw.githubusercontent.com/dataloop-ai/dtlpy/master/dtlpy/entities/trigger.py', http_status: 200}
+- {fetched: '2026-08-04', url: 'https://docs.dataloop.ai/docs/notification-system.md', http_status: 200}
+gap:
+  summary: >-
+    The event catalog is real and enumerable (6 resources x 5 actions) and there is
+    a genuine outbound Webhook entity, but neither is machine-described — no
+    AsyncAPI, no payload schemas for what a triggered function or webhook target
+    receives, no signing scheme, no retry/delivery guarantees, and the webhook
+    surface is absent from the documentation site entirely (SDK-only).
+  recommended:
+  - Publish an AsyncAPI 3.x document for the trigger resources/actions with message payload schemas.
+  - Document the /webhooks surface, its payload, its signature scheme and its retry policy on docs.dataloop.ai.

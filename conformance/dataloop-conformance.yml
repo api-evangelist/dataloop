@@ -1,0 +1,92 @@
+generated: '2026-08-04'
+method: searched
+source: https://docs.dataloop.ai/docs/compliance
+docs:
+- https://docs.dataloop.ai/docs/compliance
+- https://docs.dataloop.ai/docs/data-privacy-security
+- https://trust.dataloop.ai/
+standards:
+- id: gdpr
+  conforms: true
+  evidence: >-
+    Compliance page states adherence to the General Data Protection Regulation for
+    processing and transfer of EU personal data; trust center lists GDPR and
+    publishes a GDPR Subprocessors document and a Data Processing Agreement.
+  source: https://docs.dataloop.ai/docs/compliance
+- id: iso-27001
+  conforms: true
+  version: 'ISO/IEC 27001:2022'
+  evidence: Named on the compliance page and listed as a certification on the SafeBase trust center.
+  source: https://trust.dataloop.ai/
+- id: iso-27701
+  conforms: true
+  evidence: Privacy information management system; named on the compliance page and trust center.
+  source: https://trust.dataloop.ai/
+- id: iso-27017
+  conforms: true
+  version: 'ISO/IEC 27017:2015'
+  evidence: Listed as a certification on the trust center.
+  source: https://trust.dataloop.ai/
+- id: iso-27018
+  conforms: true
+  version: 'ISO/IEC 27018:2019'
+  evidence: Listed as a certification on the trust center.
+  source: https://trust.dataloop.ai/
+- id: soc2-type2
+  conforms: true
+  evidence: >-
+    "We have successfully achieved SOC (Service Organization Control) 2 Type II
+    compliance" — compliance page; SOC 2 Type 2 report available under NDA on the
+    trust center.
+  source: https://docs.dataloop.ai/docs/compliance
+- id: oauth2
+  conforms: partial
+  evidence: >-
+    Auth0-backed client-credentials (M2M) and interactive login flows are used by
+    the SDK/CLI, but Dataloop publishes no OAuth authorization-server metadata
+    (/.well-known/oauth-authorization-server returns no document) and no scope registry.
+  source: https://sdk-docs.dataloop.ai/en/latest/cli.html
+- id: oidc
+  conforms: false
+  evidence: No /.well-known/openid-configuration is served on any Dataloop host.
+- id: jwt-rfc7519
+  conforms: true
+  evidence: API keys are JSON Web Tokens; all requests carry a JWT bearer token in Authorization.
+  source: https://docs.dataloop.ai/docs/rest-api-connection
+- id: rfc6750-bearer-tokens
+  conforms: true
+  evidence: Documentation explicitly references the OAuth 2.0 Bearer Token scheme for the Authorization header.
+  source: https://docs.dataloop.ai/docs/rest-api-connection
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors return a custom {status,message} JSON envelope, not application/problem+json.
+  source: errors/dataloop-problem-types.yml
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: /.well-known/security.txt returns 404 on dataloop.ai and is absent on every other host.
+  source: well-known/dataloop-well-known.yml
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation response headers advertised; deprecations are documented on a page only.
+  source: lifecycle/dataloop-lifecycle.yml
+- id: openapi
+  conforms: false
+  evidence: >-
+    No public OpenAPI/Swagger document. The Swagger UI at gate.dataloop.ai/api/v1/docs/
+    requires an authenticated session (HTTP 401 anonymously), and the previously
+    indexed REST reference on developers.dataloop.ai is no longer served.
+- id: asyncapi
+  conforms: false
+  evidence: No AsyncAPI document published for the platform event/trigger surface.
+- id: fhir-r4
+  conforms: false
+- id: scim2
+  conforms: false
+- id: odata
+  conforms: false
+regulatory_context:
+  ownership: >-
+    Dataloop was acquired by Dell Technologies (announced December 2025) and the
+    platform is marketed as the Dell Data Orchestration Engine (DDOE) from the
+    March 2026 release onward, which places it inside Dell's enterprise compliance
+    posture in addition to the certifications above.

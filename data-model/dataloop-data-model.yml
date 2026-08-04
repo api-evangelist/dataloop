@@ -1,0 +1,138 @@
+generated: '2026-08-04'
+method: derived
+source: https://github.com/dataloop-ai/dtlpy/tree/master/dtlpy/entities
+docs: https://docs.dataloop.ai/docs/home
+notes: >-
+  Dataloop publishes no public OpenAPI, so the entity graph is derived from the
+  55 entity classes in the first-party Python SDK (dtlpy/entities/) — the
+  authoritative client model of the platform — cross-checked against the
+  documentation index at docs.dataloop.ai/llms.txt. Relationship directions come
+  from the id-reference fields each entity carries (project_id, dataset_id,
+  item_id, task_id, ...). Cardinalities are stated only where the SDK repositories
+  make them unambiguous.
+domains:
+- name: Identity and tenancy
+  entities: [Organization, Project, User, Bot, Integration, Setting]
+- name: Data
+  entities: [Dataset, Item, GisItem, PromptItem, Directory, Driver, Collection, Artifact, Link]
+- name: Labeling
+  entities: [Annotation, AnnotationCollection, Label, Recipe, Ontology, Feature, FeatureSet]
+- name: Workflow
+  entities: [Task, Assignment, Message]
+- name: Compute and automation
+  entities: [Package, Dpk, App, AppModule, PackageModule, PackageFunction, PackageSlot, Service, ServiceDriver, Codebase, Execution, ResourceExecution, Trigger, Webhook, Command, Compute]
+- name: Pipelines
+  entities: [Pipeline, Node, PipelineExecution]
+- name: Models and GenAI
+  entities: [Model, LlmContext, LlmMessage, LlmTrace, PromptItem]
+- name: Reporting
+  entities: [Analytic, ExportManifest]
+entities:
+- name: Organization
+  description: Top-level tenant. Owns projects, integrations, members and org-scoped bots.
+- name: Project
+  description: Primary workspace and the unit most API paths are scoped to.
+- name: Dataset
+  description: A collection of items backed by a storage driver (cloud bucket or on-premises store).
+- name: Item
+  description: A single unit of data — image, video, audio, text or LiDAR frame — with a filename path and a metadata object.
+- name: Annotation
+  description: A labeled region/attribute on an item; grouped by AnnotationCollection.
+- name: Recipe
+  description: The annotation configuration (instructions, tools, attributes) bound to a dataset or project.
+- name: Ontology
+  description: The label tree a recipe uses.
+- name: Task
+  description: A unit of annotation or review work over a set of items.
+- name: Assignment
+  description: A slice of a task assigned to one annotator.
+- name: Package
+  description: Deployable code bundle (superseded in newer flows by Dpk).
+- name: Dpk
+  description: Dataloop Package manifest — the distributable app/model unit published to the Marketplace.
+- name: App
+  description: An installed Dpk in a project, mounted as panels/services.
+- name: Service
+  description: A running FaaS deployment of a package function.
+- name: Execution
+  description: One invocation of a service function.
+- name: Trigger
+  description: Event or cron rule that invokes a service or pipeline node.
+- name: Webhook
+  description: Project-scoped outbound HTTP target (hookUrl + httpMethod) callable from pipelines.
+- name: Pipeline
+  description: A DAG of nodes orchestrating data through functions, models and human tasks.
+- name: Node
+  description: One step in a pipeline.
+- name: PipelineExecution
+  description: One run of a pipeline (a cycle).
+- name: Model
+  description: A registered model artifact with train/evaluate/predict lifecycle.
+- name: Driver
+  description: Storage driver binding a dataset to an external bucket/store.
+- name: Integration
+  description: Stored credential/connection (AWS cross-account or STS or access key, Azure, GCP private key, cross-project).
+relationships:
+- {from: Organization, to: Project, type: has_many, via: org}
+- {from: Organization, to: Integration, type: has_many, via: org}
+- {from: Organization, to: Bot, type: has_many, via: org, note: organization bot auto-created at org provisioning}
+- {from: Project, to: Dataset, type: has_many, via: projectId}
+- {from: Project, to: Task, type: has_many, via: projectId}
+- {from: Project, to: Package, type: has_many, via: projectId}
+- {from: Project, to: Dpk, type: has_many, via: projectId}
+- {from: Project, to: App, type: has_many, via: projectId}
+- {from: Project, to: Service, type: has_many, via: projectId}
+- {from: Project, to: Pipeline, type: has_many, via: projectId}
+- {from: Project, to: Webhook, type: has_many, via: project}
+- {from: Project, to: Recipe, type: has_many, via: projectId, note: project recipe is the default for new datasets}
+- {from: Dataset, to: Item, type: has_many, via: datasetId}
+- {from: Dataset, to: Recipe, type: has_many, via: metadata.system.recipes}
+- {from: Dataset, to: Driver, type: has_one, via: driver}
+- {from: Item, to: Annotation, type: has_many, via: itemId}
+- {from: Item, to: Dataset, type: belongs_to, via: datasetId}
+- {from: AnnotationCollection, to: Annotation, type: has_many, via: annotations}
+- {from: Annotation, to: Label, type: belongs_to, via: label}
+- {from: Recipe, to: Ontology, type: has_many, via: ontologyIds}
+- {from: Ontology, to: Label, type: has_many, via: labels}
+- {from: Task, to: Assignment, type: has_many, via: taskId}
+- {from: Task, to: Item, type: has_many, via: DQL filter or item references}
+- {from: Task, to: Recipe, type: has_one, via: recipeId}
+- {from: Assignment, to: User, type: belongs_to, via: annotator}
+- {from: Package, to: PackageModule, type: has_many, via: modules}
+- {from: PackageModule, to: PackageFunction, type: has_many, via: functions}
+- {from: Dpk, to: AppModule, type: has_many, via: components}
+- {from: App, to: Dpk, type: belongs_to, via: dpkId}
+- {from: Service, to: Package, type: belongs_to, via: packageId}
+- {from: Service, to: Execution, type: has_many, via: serviceId}
+- {from: Service, to: Trigger, type: has_many, via: serviceId}
+- {from: Service, to: Codebase, type: has_one, via: codebase}
+- {from: Service, to: ServiceDriver, type: has_one, via: driverId}
+- {from: Execution, to: Service, type: belongs_to, via: serviceId}
+- {from: Trigger, to: Service, type: belongs_to, via: serviceId}
+- {from: Trigger, to: Pipeline, type: belongs_to, via: pipelineId, note: pipeline triggers}
+- {from: Pipeline, to: Node, type: has_many, via: nodes}
+- {from: Pipeline, to: PipelineExecution, type: has_many, via: pipelineId}
+- {from: Node, to: Service, type: has_one, via: serviceId, note: function nodes}
+- {from: Model, to: Dataset, type: belongs_to, via: datasetId, note: training dataset}
+- {from: Model, to: Package, type: belongs_to, via: packageId}
+- {from: FeatureSet, to: Feature, type: has_many, via: featureSetId}
+- {from: PromptItem, to: Item, type: is_a, via: item}
+- {from: LlmTrace, to: LlmMessage, type: has_many, via: messages}
+identifiers:
+  style: opaque
+  format: MongoDB-style 24-character hexadecimal ObjectId strings
+  prefixed: false
+  note: >-
+    Dataloop ids carry no type prefix, so an id alone does not tell an agent which
+    entity it addresses — the resource must be supplied out of band (DQL queries
+    carry an explicit `resource` field for exactly this reason).
+metadata_convention:
+  path: metadata
+  namespaces:
+  - {name: metadata.system, owner: platform, writable: only with systemSpace/system_metadata flag}
+  - {name: metadata.user, owner: consumer, writable: true}
+render: null
+gap:
+  summary: >-
+    There is no published object reference, no schema documents, and no id-prefix
+    convention. The only complete statement of the data model is the SDK source.
