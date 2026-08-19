@@ -11,38 +11,31 @@ server:
   url: null
   hosted_endpoint: none-published
   repository: https://github.com/dataloop-ai-apps/dataloop-mcp
-  install: >-
-    Add the MCP directly to a Dataloop project on Cursor by copying the pipeline
-    link from the GitHub repository and pasting it into the "Add from GitHub" field.
+  install: Add the MCP directly to a Dataloop project on Cursor by copying the pipeline link from the
+    GitHub repository and pasting it into the "Add from GitHub" field.
 tools:
 - name: ask-dataloop
-  description: >-
-    Answer a natural-language question about the Dataloop platform and return a
-    structured response sourced from the official Dataloop documentation
-    (e.g. "How do I create a dataset?", "What are the available pipeline node types?").
+  description: Answer a natural-language question about the Dataloop platform and return a structured
+    response sourced from the official Dataloop documentation (e.g. "How do I create a dataset?", "What
+    are the available pipeline node types?").
   input_schema: unknown
   source: provider announcement
 clients_documented:
 - Cursor
-scope: >-
-  Documentation question-answering only. The server does NOT expose the Dataloop
-  platform REST surface (projects, datasets, items, annotations, tasks, services)
-  as MCP tools — it is a docs-retrieval tool, so an agent still has to fall back
-  to the SDK or the REST API to act on the platform.
+scope: Documentation question-answering only. The server does NOT expose the Dataloop platform REST surface
+  (projects, datasets, items, annotations, tasks, services) as MCP tools — it is a docs-retrieval tool,
+  so an agent still has to fall back to the SDK or the REST API to act on the platform.
 x-evidence:
 - fetched: '2026-08-04'
   url: https://dataloop.ai/blog/query-dataloop-docs-and-platform-context-using-natural-language-with-the-mcp-server-in-cursor/
   http_status: 200
-  finding: >-
-    Official Dataloop announcement of the Dataloop MCP Server, naming the single
-    tool `ask-dataloop` and linking the GitHub repository.
+  finding: Official Dataloop announcement of the Dataloop MCP Server, naming the single tool `ask-dataloop`
+    and linking the GitHub repository.
 - fetched: '2026-08-04'
   url: https://github.com/dataloop-ai-apps/dataloop-mcp
   http_status: 404
-  finding: >-
-    The repository linked from the announcement no longer resolves publicly
-    (private or renamed). Recorded as observed; the server itself is still
-    advertised by the provider.
+  finding: The repository linked from the announcement no longer resolves publicly (private or renamed).
+    Recorded as observed; the server itself is still advertised by the provider.
 - fetched: '2026-08-04'
   url: https://mcp.dataloop.ai
   http_status: 0
@@ -53,13 +46,16 @@ x-evidence:
   finding: POST tools/list rejected; not an MCP endpoint.
 probes:
   tools_list_attempted: true
-  tools_list_result: >-
-    No publicly reachable HTTP MCP endpoint. tools/list could not be executed
-    against any Dataloop host, so the live inputSchema for `ask-dataloop` is not
-    captured here — only the tool name and description the provider published.
+  tools_list_result: No publicly reachable HTTP MCP endpoint. tools/list could not be executed against
+    any Dataloop host, so the live inputSchema for `ask-dataloop` is not captured here — only the tool
+    name and description the provider published.
 gap:
-  summary: >-
-    Dataloop ships an official MCP server but publishes neither a hosted remote
-    endpoint nor a public repository/registry entry, so the tool manifest cannot
-    be introspected by an agent. Publishing a remote MCP URL (or restoring the
-    public repo) would make the server discoverable rather than announcement-only.
+  summary: Dataloop ships an official MCP server but publishes neither a hosted remote endpoint nor a
+    public repository/registry entry, so the tool manifest cannot be introspected by an agent. Publishing
+    a remote MCP URL (or restoring the public repo) would make the server discoverable rather than announcement-only.
+deployment:
+  mode: remote
+  verified: searched
+  tools: 1
+  checked: '2026-08-12'
+  source: catalog MCP census
