@@ -10,6 +10,17 @@ description: 'Dataloop is an enterprise AI data platform for the full unstructur
   Founded in Israel in 2017, Dataloop was acquired by Dell Technologies in December
   2025 and the platform is now marketed as the Dell Data Orchestration Engine (DDOE).'
 url: https://raw.githubusercontent.com/api-evangelist/dataloop/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://dataloop.ai/wp-content/uploads/2024/02/dataloop-logo-main.svg
 x-type: company
 x-source: harvest:secondary-market
