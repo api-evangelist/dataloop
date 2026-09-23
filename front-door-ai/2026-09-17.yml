@@ -1,0 +1,36 @@
+# Front Door AI Index — dataloop — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: dataloop
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: dataloop.ai
+  final_host: dataloop.ai
+  ownership: own
+  owner: dataloop
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 105
+  host_score: 105
+  density: 57.07
+  words: 1840
+  tiers:
+    agentic: 21
+    core: 84
+    model: 0
+  ambiguous: 10
+  top_terms:
+    AI: 55
+    gen ai: 20
+    RAG: 8
+    AI agent: 7
+    agent: 7
+    LLMs: 3
+    automation: 3
+    fine-tune: 3
+    foundation model: 3
+    ML: 1
+    agentic: 1
+    embedding: 1
