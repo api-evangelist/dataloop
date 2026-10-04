@@ -40,13 +40,16 @@ x-source: harvest:secondary-market
 specificationVersion: '0.23'
 created: '2026-08-04'
 modified: '2026-08-04'
+x-docs-platform: redocly
+x-docs-platform-confidence: high
+x-docs-platform-checked: 2026-09-25
 tags:
 - Artificial Intelligence
-- Machine-Learning
+- Machine Learning
 - Data Management
 - Data Annotation
 - MLOps
-- Computer-Vision
+- Computer Vision
 - Generative AI
 - Data Labeling
 - Pipelines
@@ -66,6 +69,8 @@ tags_raw:
 - Serverless
 - Enterprise Software
 - Company
+- Machine-Learning
+- Computer-Vision
 apis:
 - aid: dataloop:platform-api
   name: Dataloop Platform API
@@ -83,12 +88,13 @@ apis:
   - Data Management
   - Annotation
   - Pipelines
-  - Machine-Learning
+  - Machine Learning
   tags_raw:
   - Data Management
   - Annotation
   - Pipelines
   - Machine Learning
+  - Machine-Learning
   properties:
   - type: Documentation
     url: https://docs.dataloop.ai/docs/rest-api-connection
