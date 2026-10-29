@@ -64,5 +64,112 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-DataLoop is a company surfaced via the API Evangelist harvest backlog (source: secondary-market) and added to the network as a stub for full-pipeline profiling.
-- https://www.hiive.com/securities/dataloop-stock
+Dataloop is an enterprise AI data platform for the full unstructured-data lifecycle — ingesting images, video, audio, text and LiDAR from cloud or on-premises storage, labeling and reviewing it through managed annotation tasks and recipes, orchestrating it with pipelines and serverless functions (FaaS), and turning it into governed, model-ready datasets. The platform is programmable end to end: a JWT-authenticated REST API at gate.dataloop.ai/api/v1, a first-party Python SDK and `dlp` CLI (dtlpy), a JavaScript SDK, and a Vue component library for building in-platform applications. Founded in Israel in 2017, Dataloop was acquired by Dell Technologies in December 2025 and the platform is now marketed as the Dell Data Orchestration Engine (DDOE).
+
+**Areas:** Artificial Intelligence · Machine Learning · Data Management · Data Annotation · MLOps · Computer Vision · Generative AI · Data Labeling · Pipelines · Serverless · Enterprise Software · Company
+
+## DataLoop on APIs.io
+
+Everything profiled for DataLoop is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/dataloop/](https://apis.io/providers/dataloop/)** — or go straight to one of the APIs or properties below.
+
+### APIs (1)
+
+- [Dataloop Platform API](https://apis.io/apis/dataloop/platform-api/) — The Dataloop (Dell Data Orchestration Engine) platform REST API. Every part of the platform — projects, datasets, items, annotations, recipes and…
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### AsyncAPI (1)
+
+Event-driven and webhook contracts.
+
+- [Dataloop Platform Events](https://apis.io/asyncapis/dataloop/dataloop-platform-events/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [Dataloop MCP Server](https://apis.io/servers/dataloop/dataloop-mcp-server/)
+
+#### Security (4)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Dataloop Authentication](https://apis.io/security/dataloop/dataloop-authentication/)
+- [Dataloop Domain Security](https://apis.io/security/dataloop/dataloop-domain-security/)
+- [Dataloop Trust Center](https://apis.io/security/dataloop/dataloop-trust-center/)
+- [Dataloop Vulnerability Disclosure](https://apis.io/security/dataloop/dataloop-vulnerability-disclosure/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://dataloop.ai/)
+- [Documentation](https://docs.dataloop.ai/docs)
+- [Getting started](https://developers.dataloop.ai/onboarding/onboarding)
+- [API reference](https://sdk-docs.dataloop.ai/en/latest/)
+- [Sign up](https://console.dataloop.ai/welcome)
+- [Support](https://dataloop.ai/contact/)
+- [Blog](https://dataloop.ai/blog/)
+- [Security](https://dataloop.ai/security/)
+- [Compliance](https://docs.dataloop.ai/docs/compliance)
+- [Terms of service](https://dataloop.ai/terms/)
+- [Privacy policy](https://dataloop.ai/privacy-policy/)
+- [GitHub](https://github.com/dataloop-ai)
+- [Status](https://status.dataloop.ai/)
+
+## API Evangelist rating
+
+**Kin Score 50.8** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 71.7 |
+| Contract quality | 39.0 |
+| Contract governance | 18.2 |
+| Operational transparency | 60.5 |
+| Developer ergonomics | 71.4 |
+| Access clarity | 36.8 |
+
+**Agent readiness 24.0** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | — |
+| Reversibility Documented | — |
+| MCP Server | documented (partial credit) |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | derived (partial credit) |
+| OpenAPI Examples | — |
+| Rate Limit Signal | — |
+| Event Surface Described | yes |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | na |
+
+**Regulatory alignment 32.7** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/dataloop/](https://apis.io/providers/dataloop/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for DataLoop: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/dataloop/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
